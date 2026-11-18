@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QUICK BRAIN – TANTANGAN OTAK KILAT</title>
+<style>
+:root{--bg:#08091e;--panel:#111535;--cyan:#4df4ff;--pink:#ff4fd8;--violet:#8b72ff;--lime:#b9ff70;--gold:#ffd76b;--muted:#b9c3e9}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 10%,#30205e 0,transparent 34%),radial-gradient(ellipse at 90% 75%,#123d60 0,transparent 32%),var(--bg);color:#f7f8ff;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;overflow-x:hidden}
+button,input{font:inherit}button{cursor:pointer;border:0;font-weight:900;color:#090d25;background:linear-gradient(135deg,var(--cyan),#8ba9ff);border-radius:14px;padding:13px 20px;box-shadow:0 5px 0 #34438d,0 9px 25px #4df4ff28;transition:.16s}button:hover{filter:brightness(1.12);transform:translateY(-2px)}button:active{transform:translateY(2px);box-shadow:0 2px 0 #34438d}button:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.secondary{background:#24294f;color:#edf0ff;box-shadow:0 4px 0 #111632}.screen{display:none}.screen.active{display:block}
+#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}.star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;animation:blink 2s infinite alternate}@keyframes blink{to{opacity:.15;transform:scale(.5)}}
+header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px clamp(14px,4vw,44px);background:#090d27dd;border-bottom:1px solid #65eaff44;backdrop-filter:blur(12px)}
+.logo{font-weight:1000;letter-spacing:1.5px;color:var(--cyan)}.logo span{color:white}.stats{display:flex;gap:8px;flex-wrap:wrap}.chip{background:#1a2148;border:1px solid #718cff66;border-radius:99px;padding:8px 12px;font-size:.9rem}
+main{width:min(1050px,94vw);margin:28px auto 48px}.panel{background:#101632eF;border:1px solid #8298ff55;border-radius:24px;padding:clamp(18px,3vw,30px);box-shadow:0 20px 60px #0007,inset 0 1px #fff1;backdrop-filter:blur(12px)}
+.hero{text-align:center;padding:clamp(30px,6vw,68px) 16px}.eyebrow{font-size:.78rem;font-weight:950;letter-spacing:3px;color:var(--cyan)}
+h1{font-size:clamp(2.2rem,7vw,5rem);line-height:1;margin:12px 0;background:linear-gradient(90deg,#fff,var(--cyan),var(--pink));background-clip:text;color:transparent}
+h2{font-size:clamp(1.45rem,3vw,2rem);margin:8px 0 14px}.lead{color:#c8d2f4;line-height:1.65;max-width:680px;margin:14px auto 24px}
+.brain{font-size:100px;filter:drop-shadow(0 0 24px #ff4fd8);animation:float 3s ease-in-out infinite}@keyframes float{50%{transform:translateY(-12px) rotate(5deg)}}
+.entry{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:24px auto}input{min-width:min(280px,80vw);padding:14px;border-radius:12px;border:1px solid #8298ff88;background:#080f2a;color:white;outline:none}input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #4df4ff22}
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin:22px 0}.level{padding:16px;border:1px solid #8298ff55;border-radius:16px;background:linear-gradient(145deg,#202956,#111733)}.level b{display:block;color:var(--cyan);margin-bottom:6px}.level small{color:var(--muted)}
+.barline{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.bar{height:10px;flex:1;min-width:130px;background:#272d55;border-radius:99px;overflow:hidden}.bar div{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--pink));transition:width .3s}
+.gamehead{margin-bottom:15px}.questionbox{margin:16px 0;padding:clamp(20px,4vw,34px);border:1px solid #4df4ff66;border-radius:20px;background:radial-gradient(ellipse at 50% 0,#28366a,#111632 70%);text-align:center;box-shadow:inset 0 0 30px #4df4ff0b}
+.qtype{color:var(--gold);font-size:.8rem;font-weight:950;letter-spacing:2px}.question{font-size:clamp(1.45rem,4vw,2.4rem);font-weight:950;line-height:1.35;margin:14px auto;max-width:800px}
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.answer{min-height:100px;display:flex;align-items:center;gap:14px;text-align:left;padding:17px;border-radius:18px;background:linear-gradient(135deg,#1d2a58,#171d42);border:2px solid #718cff77;color:#f8faff;box-shadow:0 7px 0 #0a1029;transition:.16s;font-size:clamp(1.05rem,2.5vw,1.4rem)}
+.answer .letter{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:12px;background:#4df4ff;color:#071126;font-weight:1000}
+.answer.selected{border-color:var(--gold);box-shadow:0 0 0 3px #ffd76b33,0 0 28px #ffd76b55;transform:scale(1.015)}
+.answer.correct{border-color:var(--lime);background:linear-gradient(135deg,#1d604c,#153b3c)}.answer.wrong{border-color:#ff668d;background:linear-gradient(135deg,#622842,#351d3c)}
+.feedback{min-height:54px;margin-top:15px;padding:13px 16px;border-radius:14px;background:#1a2148;border:1px solid #788eff55;color:#dce6ff;line-height:1.5}.feedback.good{border-color:#73efb0;color:#a9ffd0}.feedback.bad{border-color:#ff7897;color:#ffc0ce}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:15px}.side{display:flex;flex-direction:column;gap:12px}.side .panel{padding:16px;border-radius:17px}.side p{color:var(--muted);font-size:.9rem;line-height:1.5}
+.camera{aspect-ratio:4/3;background:#05091a;border:1px solid #7d91ff66;border-radius:12px;overflow:hidden;position:relative;margin-top:10px}.camera video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}#camText{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#c2cff5;padding:12px;font-size:.85rem}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ffb94f;margin-right:7px}.dot.live{background:#6dffae;box-shadow:0 0 10px #6dffae}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.controls button{font-size:.8rem;padding:9px 12px}.hint{color:#9eaddb;font-size:.82rem;line-height:1.5;margin-top:12px}
+.timer{font-size:1.2rem;font-weight:1000;color:var(--gold)}.timer.urgent{color:#ff7897;animation:pulse .5s infinite alternate}@keyframes pulse{to{transform:scale(1.08)}}
+.pointer{position:fixed;z-index:20;left:50%;top:50%;width:24px;height:24px;border:3px solid var(--cyan);border-radius:50%;box-shadow:0 0 18px var(--cyan);pointer-events:none;display:none;transform:translate(-50%,-50%)}.pointer.pinched{background:var(--pink);border-color:white;box-shadow:0 0 25px var(--pink)}
+.overlay{position:fixed;inset:0;background:#020515d9;z-index:30;display:none;place-items:center;padding:18px}.overlay.show{display:grid}.modal{width:min(500px,100%);padding:28px;text-align:center;border-radius:24px;border:1px solid #8fa9ff88;background:#121b42;box-shadow:0 20px 80px #000b}.modal .icon{font-size:58px}
+footer{text-align:center;color:#7e8dbb;font-size:.8rem;margin-top:25px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.side .panel:last-child{grid-column:1/-1}}
+@media(max-width:560px){header{align-items:flex-start;flex-direction:column}.answers{grid-template-columns:1fr}.answer{min-height:75px}.side{display:flex}.question{font-size:1.45rem}}
+</style>
+</head>
+<body>
+<div id="stars"></div><div id="handPointer" class="pointer"></div>
+<header><div class="logo">⚡ QUICK <span>BRAIN</span></div><div class="stats"><span class="chip">🧠 <b id="navName">Pemain</b></span><span class="chip">⭐ <b id="navScore">0</b></span><span class="chip">⏱️ <b id="navTime">20</b>s</span></div></header>
+<main>
+<section id="start" class="screen active panel hero">
+ <div class="eyebrow">MATEMATIKA • KELAS IV • PENJUMLAHAN PECAHAN</div><div class="brain">🧠</div>
+ <h1>QUICK BRAIN</h1><h2>TANTANGAN OTAK KILAT</h2>
+ <p class="lead">Siapkan pikiranmu! Jawab 15 tantangan penjumlahan pecahan dalam lima level. Arahkan telapak tangan ke jawaban, lalu lakukan gesture pinch untuk memilih.</p>
+ <div class="entry"><input id="nameInput" maxlength="24" placeholder="Masukkan nama siswa" aria-label="Nama siswa"><button id="startBtn">MULAI TANTANGAN ⚡</button></div>
+ <p class="hint">5 level • 3 soal setiap level • LOTS, MOTS, HOTS</p>
+</section>
+<section id="map" class="screen panel">
+ <div class="eyebrow">PETA TANTANGAN</div><h2>Ayo mulai, <span id="mapName"></span>!</h2><p class="lead" style="text-align:left;margin:0">Level terbuka secara berurutan. Selesaikan tiga soal untuk membuka level selanjutnya.</p>
+ <div id="levelGrid" class="levels"></div><button id="backHome" class="secondary">Kembali</button>
+</section>
+<section id="game" class="screen">
+ <div class="panel gamehead">
+  <div class="barline"><div><div class="eyebrow" id="levelLabel">LEVEL 1</div><h2 id="levelTitle">Pecahan Dasar</h2></div><div class="chip">Soal <b id="qCount">1/3</b></div><div class="timer" id="timer">20s</div></div>
+  <div class="barline"><span class="hint">Progress level</span><div class="bar"><div id="progress"></div></div><b id="progressLabel">0/3</b></div>
+ </div>
+ <div class="layout"><div>
+  <div class="questionbox"><div id="qType" class="qtype">LOTS • INGAT & PAHAMI</div><div id="question" class="question">1/4 + 1/4 = ...</div><div class="hint">Pilih satu jawaban yang benar.</div></div>
+  <div id="answers" class="answers"></div>
+  <div id="feedback" class="feedback" aria-live="polite">Pilih jawaban dengan mouse, sentuhan, atau gesture pinch.</div>
+ </div>
+ <aside class="side">
+  <div class="panel"><b>📷 Kendali Telapak Tangan</b><div class="camera"><video id="video" autoplay playsinline muted></video><div id="camText">Kamera belum aktif.<br>Tekan Aktifkan Kamera.</div></div><p><span id="camDot" class="dot"></span><span id="camStatus">Kamera nonaktif</span></p><div class="controls"><button id="camOn">Aktifkan Kamera</button><button id="camOff" class="secondary">Matikan</button></div><p class="hint">Arahkan telapak untuk memindahkan penunjuk. Satukan ibu jari dan telunjuk (pinch) untuk mengunci jawaban.</p></div>
+  <div class="panel"><b>🎮 Alternatif Kontrol</b><p>Mouse: klik pilihan.<br>Layar sentuh: sentuh kotak jawaban.<br>Keyboard: tombol 1–4 atau A–D.</p><p class="hint">Timer setiap soal: 20 detik.</p></div>
+  <div class="panel"><b>🏆 Skor Sementara</b><p>Skor: <b id="sideScore">0</b><br>Benar: <b id="sideCorrect">0</b>/15<br>Level terbuka: <b id="sideLevel">1</b>/5</p><button id="exitGame" class="secondary">Kembali ke peta</button></div>
+ </aside></div>
+</section>
+<section id="result" class="screen panel hero"><div class="eyebrow">HASIL TANTANGAN</div><div class="brain">🏆</div><h1 id="resultTitle">HEBAT!</h1><h2 id="resultName"></h2><p class="lead" id="resultText"></p><div class="chip">Skor akhir: <b id="finalScore">0</b> ⭐</div><div class="entry"><button id="again">MAIN KEMBALI 🔁</button></div></section>
+<footer>QUICK BRAIN • Belajar pecahan jadi menyenangkan!</footer>
+</main>
+<div id="modal" class="overlay"><div class="modal"><div id="modalIcon" class="icon">✨</div><h2 id="modalTitle">Benar!</h2><p id="modalMsg" class="lead"></p><button id="modalBtn">Lanjut</button></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+<script>
+'use strict';
+const data=[
+{title:'Level 1 – Pecahan Sejenis',diff:'Mudah',qs:[
+{type:'LOTS',q:'Hasil dari 1/4 + 1/4 adalah ...',a:['2/4','1/8','2/8','1/4'],c:0,e:'Penyebut sama, jumlahkan pembilang: 1 + 1 = 2. Jadi hasilnya 2/4.'},
+{type:'MOTS',q:'Rani memiliki 2/5 meter pita. Ia mendapat lagi 1/5 meter. Panjang pita Rani sekarang ...',a:['3/5 m','3/10 m','1/5 m','2/10 m'],c:0,e:'2/5 + 1/5 = 3/5 meter karena penyebutnya sama.'},
+{type:'HOTS',q:'Dua potong kertas masing-masing 3/8 dan 2/8 bagian digunakan. Berapa bagian kertas yang digunakan seluruhnya?',a:['5/8','5/16','1/8','6/8'],c:0,e:'Kedua bagian dijumlahkan: 3/8 + 2/8 = 5/8.'}]},
+{title:'Level 2 – Penjumlahan Beragam',diff:'Mudah–Sedang',qs:[
+{type:'LOTS',q:'Hasil dari 2/7 + 3/7 adalah ...',a:['5/7','5/14','1/7','6/7'],c:0,e:'Jumlahkan pembilang 2 + 3 = 5, penyebut tetap 7.'},
+{type:'MOTS',q:'Budi membaca 1/6 bagian buku pada pagi hari dan 3/6 bagian pada sore hari. Bagian yang telah dibaca adalah ...',a:['4/6','3/12','2/6','4/12'],c:0,e:'1/6 + 3/6 = 4/6 bagian buku.'},
+{type:'HOTS',q:'Sebuah wadah berisi air 2/9 bagian. Ditambah air 4/9 bagian. Pernyataan yang benar adalah ...',a:['Isi menjadi 6/9 bagian','Isi menjadi 6/18 bagian','Isi menjadi 2/9 bagian','Isi menjadi 8/9 bagian'],c:0,e:'2/9 + 4/9 = 6/9. Jadi wadah terisi 6 dari 9 bagian.'}]},
+{title:'Level 3 – Pecahan dalam Cerita',diff:'Sedang',qs:[
+{type:'LOTS',q:'Pada penjumlahan 2/5 + 1/5, angka yang tetap menjadi penyebut adalah ...',a:['5','2','3','1'],c:0,e:'Jika penyebut sama, penyebut tetap dan pembilang dijumlahkan.'},
+{type:'MOTS',q:'Ibu menggunakan 1/8 kg gula untuk kue dan 3/8 kg untuk minuman. Jumlah gula yang digunakan adalah ...',a:['4/8 kg','3/16 kg','2/8 kg','4/16 kg'],c:0,e:'1/8 + 3/8 = 4/8 kg.'},
+{type:'HOTS',q:'Dina berjalan 2/10 km pada pagi hari dan 5/10 km pada sore hari. Targetnya 8/10 km. Berapa km lagi yang harus ditempuh?',a:['1/10 km','2/10 km','3/10 km','7/10 km'],c:0,e:'Total 2/10 + 5/10 = 7/10. Selisih ke target 8/10 adalah 1/10 km.'}]},
+{title:'Level 4 – Menyederhanakan Hasil',diff:'Sedang–Sulit',qs:[
+{type:'LOTS',q:'Pecahan 2/4 senilai dengan ...',a:['1/2','1/4','2/3','3/4'],c:0,e:'2/4 dapat disederhanakan dengan membagi pembilang dan penyebut dengan 2 menjadi 1/2.'},
+{type:'MOTS',q:'Hasil 1/6 + 2/6 adalah 3/6. Bentuk paling sederhana dari 3/6 ialah ...',a:['1/2','1/3','2/3','3/2'],c:0,e:'3/6 dibagi 3 pada pembilang dan penyebut menjadi 1/2.'},
+{type:'HOTS',q:'Ayu menyatakan 1/4 + 2/4 = 3/8. Apa kesalahan Ayu?',a:['Penyebut dijumlahkan, padahal tetap 4','Pembilang seharusnya dikurangi','Hasilnya harus 2/4','Tidak ada kesalahan'],c:0,e:'Untuk penyebut sama, pembilang dijumlahkan sedangkan penyebut tidak berubah. Hasil benar 3/4.'}]},
+{title:'Level 5 – Tantangan Master',diff:'Sulit',qs:[
+{type:'LOTS',q:'Untuk menjumlahkan 1/2 + 1/4, penyebut perlu disamakan menjadi ...',a:['4','2','6','8'],c:0,e:'Penyebut 2 dan 4 dapat disamakan menjadi 4.'},
+{type:'MOTS',q:'Hasil dari 1/2 + 1/4 adalah ...',a:['3/4','2/6','1/6','2/4'],c:0,e:'1/2 sama dengan 2/4. Jadi 2/4 + 1/4 = 3/4.'},
+{type:'HOTS',q:'Tali merah panjangnya 1/2 m dan tali biru 1/4 m. Untuk membuat hiasan 1 m, berapa meter tali tambahan yang diperlukan?',a:['1/4 m','1/2 m','3/4 m','1/8 m'],c:0,e:'Jumlah tali 1/2 + 1/4 = 3/4 m. Kekurangan menuju 1 m adalah 1/4 m.'}]}
+];
+let name='Pemain',score=0,correct=0,level=0,qi=0,unlocked=1,done=new Set(),timeLeft=20,timerId=null,answered=false;
+let stream=null,mpHands=null,mpCamera=null,camActive=false,handPointer={x:.5,y:.5},pinchWas=false,selected=-1,raf=null,audioCtx=null;
+const $=id=>document.getElementById(id),letters=['A','B','C','D'];
+function screen(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active')}
+function stats(){$('navName').textContent=name;$('navScore').textContent=score;$('sideScore').textContent=score;$('sideCorrect').textContent=correct;$('sideLevel').textContent=unlocked}
+function stars(){for(let i=0;i<95;i++){let s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';$('stars').appendChild(s)}}
+function sound(ok){try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type='sine';o.frequency.value=ok?740:190;g.gain.setValueAtTime(.12,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.24);o.start();o.stop(audioCtx.currentTime+.25)}catch(e){}}
+function begin(){name=$('nameInput').value.trim()||'Pemain';score=0;correct=0;level=0;qi=0;unlocked=1;done.clear();stats();$('mapName').textContent=name;renderMap();screen('map')}
+function renderMap(){let root=$('levelGrid');root.innerHTML='';data.forEach((d,i)=>{let open=i<unlocked,complete=done.has(i),el=document.createElement('div');el.className='level';el.innerHTML=`<b>${complete?'🏆':open?'⚡':'🔒'} ${d.title}</b><small>${d.diff} • 3 soal</small><p class="hint">${complete?'Sudah selesai':open?'Siap dimainkan':'Selesaikan level sebelumnya'}</p><button ${open?'':'disabled'}>${complete?'Ulangi':'Mulai'}</button>`;el.querySelector('button').onclick=()=>startLevel(i);root.appendChild(el)})}
+function startLevel(i){level=i;qi=0;screen('game');loadQ()}
+function loadQ(){answered=false;selected=-1;let q=data[level].qs[qi];$('levelLabel').textContent='LEVEL '+(level+1)+' • '+q.type;$('levelTitle').textContent=data[level].title;$('qCount').textContent=(qi+1)+'/3';$('qType').textContent=q.type+' • '+(q.type==='LOTS'?'INGAT & PAHAMI':q.type==='MOTS'?'MENERAPKAN':'BERPIKIR KRITIS');$('question').textContent=q.q;$('progress').style.width=(qi/3*100)+'%';$('progressLabel').textContent=qi+'/3';$('feedback').className='feedback';$('feedback').textContent='Pilih jawaban dengan klik, sentuhan, atau gesture pinch.';let root=$('answers');root.innerHTML='';q.a.forEach((v,i)=>{let b=document.createElement('button');b.className='answer';b.innerHTML=`<span class="letter">${letters[i]}</span><span>${v}</span>`;b.onclick=()=>answer(i);root.appendChild(b)});stats();startTimer();updatePointer()}
+function startTimer(){clearInterval(timerId);timeLeft=20;showTime();timerId=setInterval(()=>{timeLeft--;showTime();if(timeLeft<=0){clearInterval(timerId);if(!answered)answer(-1)}},1000)}
+function showTime(){$('timer').textContent=timeLeft+'s';$('navTime').textContent=timeLeft;$('timer').classList.toggle('urgent',timeLeft<=5)}
+function answer(i){if(answered)return;answered=true;clearInterval(timerId);let q=data[level].qs[qi],good=i===q.c,buttons=[...document.querySelectorAll('.answer')];buttons.forEach((b,j)=>{b.disabled=true;if(j===q.c)b.classList.add('correct');if(j===i&&!good)b.classList.add('wrong')});let fb=$('feedback');if(good){score+=100;correct++;sound(true);fb.className='feedback good';fb.textContent='✨ BENAR! '+q.e}else{sound(false);fb.className='feedback bad';fb.textContent=(i===-1?'⏰ Waktu habis. ':'Belum tepat. ')+q.e+' Jawaban benar: '+letters[q.c]+'.'}stats();$('progress').style.width=((qi+1)/3*100)+'%';$('progressLabel').textContent=(qi+1)+'/3';setTimeout(()=>{if(qi<2){qi++;loadQ()}else{done.add(level);unlocked=Math.max(unlocked,Math.min(5,level+2));if(done.size===5){finish()}else{renderMap();showModal('🎉','Level selesai!',`Bagus, ${name}! Kamu telah menyelesaikan ${data[level].title}. Level selanjutnya terbuka.`,()=>{hideModal();screen('map')})}}},1900)}
+function finish(){stopTimer();stopCamera();$('resultTitle').textContent=correct>=12?'LUAR BIASA!':correct>=8?'KERJA BAGUS!':'TETAP SEMANGAT!';$('resultName').textContent='Selamat, '+name+'!';$('resultText').textContent=`Kamu telah menyelesaikan 5 level dan menjawab ${correct} dari 15 soal dengan benar. Terus berlatih agar semakin mahir menjumlahkan pecahan!`; $('finalScore').textContent=score;screen('result')}
+function stopTimer(){clearInterval(timerId)}
+function showModal(icon,title,msg,action){$('modalIcon').textContent=icon;$('modalTitle').textContent=title;$('modalMsg').textContent=msg;$('modalBtn').onclick=action;$('modal').classList.add('show')}
+function hideModal(){$('modal').classList.remove('show')}
+function reset(){stopTimer();stopCamera();hideModal();begin()}
+function updatePointer(){let p=$('handPointer');p.style.left=(handPointer.x*innerWidth)+'px';p.style.top=(handPointer.y*innerHeight)+'px'}
+function selectAtPointer(){let el=document.elementFromPoint(handPointer.x*innerWidth,handPointer.y*innerHeight);let btn=el?.closest('.answer');document.querySelectorAll('.answer').forEach((b,i)=>b.classList.toggle('selected',!!btn&&b===btn));selected=btn?[...document.querySelectorAll('.answer')].indexOf(btn):-1}
+function handResults(res){if(!camActive)return;let lm=res.multiHandLandmarks?.[0];if(!lm){$('camStatus').textContent='Tunjukkan telapak tangan';return}let palm=lm[9];handPointer.x=1-palm.x;handPointer.y=palm.y;updatePointer();selectAtPointer();let pinch=Math.hypot(lm[4].x-lm[8].x,lm[4].y-lm[8].y)<.055;$('handPointer').classList.toggle('pinched',pinch);$('camStatus').textContent=pinch?'Pinch terdeteksi':'Telapak terdeteksi';if(pinch&&!pinchWas&&selected>=0)answer(selected);pinchWas=pinch}
+async function startCamera(){if(camActive)return;if(!navigator.mediaDevices?.getUserMedia){$('camStatus').textContent='Browser tidak mendukung kamera';return}try{$('camStatus').textContent='Meminta izin kamera...';stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:640,height:480},audio:false});$('video').srcObject=stream;await $('video').play();$('camText').style.display='none';camActive=true;$('camDot').classList.add('live');$('camStatus').textContent='Memuat pengenalan tangan';$('camOn').disabled=true;$('handPointer').style.display='block';if(typeof Hands==='undefined'){ $('camStatus').textContent='MediaPipe gagal dimuat. Gunakan kontrol alternatif.';return}
+ mpHands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`});mpHands.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:.65,minTrackingConfidence:.6});mpHands.onResults(handResults);
+ const loop=async()=>{if(camActive&&mpHands){if($('video').readyState>=2)await mpHands.send({image:$('video')});raf=requestAnimationFrame(loop)}};loop();
+ }catch(e){$('camStatus').textContent=e.name==='NotAllowedError'?'Izin kamera ditolak':'Kamera tidak dapat diakses';stopCamera()}}
+function stopCamera(){camActive=false;if(raf)cancelAnimationFrame(raf);raf=null;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}if(mpHands){try{mpHands.close()}catch(e){}mpHands=null}$('video').srcObject=null;$('camText').style.display='grid';$('camDot').classList.remove('live');$('camStatus').textContent='Kamera nonaktif';$('camOn').disabled=false;$('handPointer').style.display='none';$('handPointer').classList.remove('pinched');pinchWas=false;document.querySelectorAll('.answer').forEach(b=>b.classList.remove('selected'))}
+document.addEventListener('keydown',e=>{if(!$('game').classList.contains('active')||answered)return;let k=e.key.toLowerCase(),idx=['1','a'].includes(k)?0:['2','b'].includes(k)?1:['3','c'].includes(k)?2:['4','d'].includes(k)?3:-1;if(idx>=0)answer(idx)});
+$('startBtn').onclick=begin;$('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')begin()});$('backHome').onclick=()=>screen('start');$('camOn').onclick=startCamera;$('camOff').onclick=stopCamera;$('exitGame').onclick=()=>{stopTimer();stopCamera();renderMap();screen('map')};$('again').onclick=reset;
+window.addEventListener('beforeunload',()=>{stopCamera();stopTimer()});stars();stats();
+</script>
+</body></html>
